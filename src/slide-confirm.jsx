@@ -6,7 +6,7 @@ import { ArrowRight, Check } from "lucide-react";
  * Slide to confirm.
  * Install: npm install framer-motion lucide-react
  * Import: import { SlideConfirm } from "./slide-confirm";
- * Use: <SlideConfirm corner={28} speed={50} width={280} />
+ * Use: <SlideConfirm corner={28} speed={50} width={280} theme="dark" stroke={false} />
  * The component styles are included below, so this is the only file needed.
  */
 
@@ -15,8 +15,8 @@ const slideConfirmStyles = `
 .sld-track{position:relative;width:100%;height:100%;box-sizing:border-box;background:var(--sld-slab,#242424);touch-action:none;user-select:none;-webkit-user-select:none;overflow:hidden}
 .sld-track[data-stroke="on"]{box-shadow:inset 0 0 0 1px #ffffff35}
 .sld-wash{position:absolute;left:4px;top:4px;bottom:4px;z-index:1;background:var(--sld-on,#f5f5f3);pointer-events:none}
-.sld-label{position:absolute;inset:0;z-index:0;display:grid;place-items:center;color:#ffffff91;font-size:14px;font-weight:500;letter-spacing:-.01em;pointer-events:none;white-space:nowrap}
-.sld-grip{position:absolute;left:4px;top:4px;z-index:2;height:48px;padding:0;border:0;background:var(--sld-on,#f5f5f3);color:#242424;cursor:grab;pointer-events:auto;transform-origin:0% 50%;transition:none}
+.sld-label{position:absolute;inset:0;z-index:0;display:grid;place-items:center;color:var(--sld-label,#ffffff91);font-size:14px;font-weight:500;letter-spacing:-.01em;pointer-events:none;white-space:nowrap}
+.sld-grip{position:absolute;left:4px;top:4px;z-index:2;height:48px;padding:0;border:0;background:var(--sld-on,#f5f5f3);color:var(--sld-grip-ink,#242424);cursor:grab;pointer-events:auto;transform-origin:0% 50%;transition:none}
 .sld-track[data-held] .sld-grip{cursor:grabbing}
 .sld-arrow,.sld-done{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:500;letter-spacing:-.01em;white-space:nowrap;pointer-events:none}
 @media(prefers-reduced-motion:reduce){.sld-done{transition-duration:160ms}}
@@ -27,7 +27,7 @@ const HEIGHT = 56;
 const PAD = 4;
 const GRIP = HEIGHT - PAD * 2;
 
-export function SlideConfirm({ corner = 28, speed = 50, width = 280, onConfirm }) {
+export function SlideConfirm({ corner = 28, speed = 50, width = 280, theme = "dark", stroke = false, onConfirm }) {
   const [done, setDone] = useState(false);
   const [hot, setHot] = useState(false);
   const [held, setHeld] = useState(false);
@@ -44,6 +44,7 @@ export function SlideConfirm({ corner = 28, speed = 50, width = 280, onConfirm }
   const travel = span - PAD * 2 - GRIP;
   const radius = clamp(corner, 0, HEIGHT / 2);
   const gripRadius = Math.max(0, radius - PAD);
+  const dark = theme === "dark";
   const stiffness = 260 + clamp(speed, 0, 100) / 100 * 640;
   const commitSpring = { type: "spring", stiffness, damping: 2 * Math.sqrt(stiffness * 0.9), mass: 0.9 };
   const returnSpring = { ...commitSpring, damping: 2 * Math.sqrt(stiffness * 0.9) * 0.62 };
@@ -132,8 +133,8 @@ export function SlideConfirm({ corner = 28, speed = 50, width = 280, onConfirm }
   return (
     <>
       <style>{slideConfirmStyles}</style>
-      <div className="sld" style={{ width: span, height: HEIGHT, "--sld-on": "#f5f5f3", "--sld-slab": "#242424" }}>
-        <motion.div ref={track} className="sld-track" style={{ borderRadius: radius, scale: pulse }} data-stroke="on" data-held={held || undefined} data-done={done || undefined} onPointerDown={onPointerDown}>
+      <div className={`sld ${dark ? "sld-dark" : "sld-light"}`} style={{ width: span, height: HEIGHT, "--sld-on": dark ? "#f5f5f3" : "#242424", "--sld-slab": dark ? "#242424" : "#f5f5f3", "--sld-label": dark ? "#ffffff91" : "#24242491", "--sld-grip-ink": dark ? "#242424" : "#f5f5f3" }}>
+        <motion.div ref={track} className="sld-track" style={{ borderRadius: radius, scale: pulse }} data-stroke={stroke ? "on" : "off"} data-held={held || undefined} data-done={done || undefined} onPointerDown={onPointerDown}>
           <motion.i className="sld-wash" aria-hidden="true" style={{ width: washWidth, borderRadius: gripRadius }} />
           <motion.span className="sld-label" style={{ opacity: labelOpacity }}>Slide to confirm</motion.span>
           <motion.button type="button" className="sld-grip" onPointerEnter={() => setHot(true)} onPointerLeave={() => setHot(false)} style={{ x: position, scaleX, scaleY, width: gripWidth, borderRadius: gripRadius }} aria-label={done ? "Confirmed" : "Slide to confirm"}>
