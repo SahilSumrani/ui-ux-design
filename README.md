@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-The gallery stays open locally while Supabase credentials are not configured, so the component previews are easy to develop. Production fails closed until email authentication is configured.
+Component previews are public. Supabase email sign-in is required only to view or copy the source code. Without Supabase credentials, previews remain public and source access shows a setup message.
 
 ## Email-only sign-in
 
@@ -20,7 +20,7 @@ Sign-in uses a Supabase one-time email link. The form asks only for an email add
 3. Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` in Vercel's Production environment. The publishable key is intended for a public client. Never put a Supabase secret/service-role key in a `VITE_` variable.
 4. Set the same variables in an untracked `.env.local` file for local authentication.
 
-Copy `.env.example` as a starting point. With the Supabase variables absent, local development intentionally skips the sign-in gate; a production deployment shows a setup error and does not expose the gallery until the variables are set.
+Copy `.env.example` as a starting point. With the Supabase variables absent, previews still work in both local and production environments, but source viewing and copying remain locked.
 
 Supabase's default Magic Link email template must include `{{ .ConfirmationURL }}`. `signInWithOtp` sends that one-time link and automatically creates a user on first sign-in.
 
@@ -28,7 +28,7 @@ Supabase's default Magic Link email template must include `{{ .ConfirmationURL }
 
 Import `SahilSumrani/ui-ux-design` into Vercel, choose the Vite preset, add the two environment variables, and deploy. `vercel.json` configures security headers, including a Content Security Policy limited to this site, Google Fonts, and Supabase Auth.
 
-After Vercel provides the production URL, add that exact URL to Supabase's Auth Site URL and redirect allow list, then test sign-in and verify the response headers on the deployed URL. The repository can be reviewed before that production check; production authentication cannot be verified until the Supabase project and Vercel URL are configured.
+Set the exact production URL as Supabase's Auth Site URL and add it to the redirect allow list. After deployment, test sign-in and verify the response headers on the live URL.
 
 ## Security notes
 
