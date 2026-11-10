@@ -1,4 +1,4 @@
-const postgres = require("postgres").default;
+import postgres from "postgres";
 
 let sql;
 
@@ -16,7 +16,7 @@ function getDatabase() {
   return sql;
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
   res.setHeader("X-Content-Type-Options", "nosniff");
 
@@ -52,4 +52,4 @@ module.exports = async function handler(req, res) {
     console.error("Email signup database write failed:", error?.message ?? "Unknown error");
     return res.status(503).json({ error: "Could not save your email. Please try again shortly." });
   }
-};
+}
