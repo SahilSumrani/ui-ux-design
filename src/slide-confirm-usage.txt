@@ -1,0 +1,6 @@
+npm install framer-motion lucide-react
+
+import { SlideConfirm } from "./slide-confirm";
+import "./slide-confirm.css";
+
+<SlideConfirm corner={28} speed={50} width={280} />
