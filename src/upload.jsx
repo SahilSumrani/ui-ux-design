@@ -7,7 +7,7 @@ import { Check, Upload as UploadIcon } from "lucide-react";
  * nothing is read from disk or sent to a server.
  * Install: npm install framer-motion lucide-react
  * Import: import { Upload } from "./upload";
- * Use: <Upload speed={50} bounce={40} corner={20} />
+ * Use: <Upload speed={50} bounce={40} corner={20} fill="dark" stroke={false} />
  * Styles are included here so this component is a single copyable file.
  */
 const uploadStyles = `
@@ -48,7 +48,7 @@ function Roll({ value }) {
   return <span className="upl-roll" aria-label={`${digits}%`}>{digits.split("").map((digit, i) => <span key={`${i}-${digits.length}`} className="upl-roll-col"><span className="upl-roll-strip" style={{ transform: `translateY(${-Number(digit)}em)` }}>{"0123456789".split("").map(n => <span key={n}>{n}</span>)}</span></span>)}%</span>;
 }
 
-export function Upload({ speed = 50, bounce = 40, corner = 20 } = {}) {
+export function Upload({ speed = 50, bounce = 40, corner = 20, fill = "dark", stroke = false } = {}) {
   const still = reducedMotion();
   const [phase, setPhase] = useState({ kind: "idle" });
   const [inBox, setInBox] = useState(null);
@@ -172,12 +172,14 @@ export function Upload({ speed = 50, bounce = 40, corner = 20 } = {}) {
     box.style.height = `${row.offsetHeight + 28}px`;
   }, [phase.kind]);
 
-  const r = Math.max(0, corner);
+  const r = clamp(corner, 0, 32);
+  const isDark = fill === "dark";
+  const fillStyle = { "--fill-on": isDark ? "#f5f5f3" : "#242424", "--fill-slab": isDark ? "#242424" : "#f5f5f3", "--pane-edge": isDark ? "#ffffff38" : "#22222238" };
   const uploading = phase.kind !== "idle";
   const file = uploading ? phase.file : null;
   return <>
     <style>{uploadStyles}</style>
-    <div className="upl" data-held={held ? "true" : undefined} style={{ "--upl-r": `${r}px`, "--upl-spring": `cubic-bezier(.3,${1 + bounce / 100 * 0.9},.4,1)` }}>
+    <div className="upl" data-stroke={stroke ? "on" : "off"} data-held={held ? "true" : undefined} style={{ ...fillStyle, "--upl-r": `${r}px`, "--upl-spring": `cubic-bezier(.3,${1 + clamp(bounce, 0, 100) / 100 * 0.9},.4,1)` }}>
       <motion.div animate={shake} className="upl-zone-wrap">
         <div ref={zone} className="upl-zone" data-over={over || undefined} data-refuse={refuse ? "true" : undefined} data-busy={uploading || undefined} data-gulp={gulp || undefined} aria-live="polite">
           {!file ? <><span className="upl-icon"><UploadIcon size={18} strokeWidth={2} /></span><span className="upl-say"><b>{refuse ?? (over ? "Drop to upload" : "Drag a file here")}</b><span>Up to {MAX} MB</span></span></> : <span className="upl-now" key={file.id} ref={now}><Page file={file} size={36} /><span className="upl-text"><span className="upl-name">{file.name}</span><span className="upl-meta">{fmt(file.size)} · {phase.kind === "done" ? "Uploaded" : <Roll value={phase.kind === "up" ? phase.p * 100 : 0} />}</span><span className="upl-track"><span className="upl-bar" style={{ transform: `scaleX(${phase.kind === "up" ? phase.p : 1})` }} /></span></span><span className="upl-end">{phase.kind === "done" && <span className="upl-tick"><Check size={14} strokeWidth={2} /></span>}</span></span>}
