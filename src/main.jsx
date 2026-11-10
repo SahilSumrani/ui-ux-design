@@ -8,8 +8,6 @@ import {SlideConfirm} from "./slide-confirm.jsx";
 import zipSources from "./zipSources.json";
 import daylightSource from "./sources/toggle-daylight.html?raw";
 import slideConfirmSource from "./slide-confirm.jsx?raw";
-import slideConfirmCss from "./slide-confirm.css?raw";
-import slideConfirmUsage from "./slide-confirm-usage.txt?raw";
 import "./style.css";
 const cardImages=[
  {id:"mountain",src:"/reference-assets/card-mountain-CpUb5EuW.jpg",label:"Mountain"},
@@ -31,7 +29,7 @@ const data=[
  {id:"accordion",title:"Image Accordion",subtitle:"Hover or tap to unfold",code:zipSources.accordion},
  {id:"lens",title:"Image Lens",subtitle:"Explore the details",code:zipSources.lens},
  {id:"trail",title:"Image Trail",subtitle:"Move or tap to leave a trace",code:zipSources.trail},
- {id:"slide-confirm",title:"Slide to Confirm",subtitle:"Drag to the end · release to confirm",code:slideConfirmSource,files:[{filename:"slide-confirm.jsx",language:"JSX",code:slideConfirmSource},{filename:"slide-confirm.css",language:"CSS",code:slideConfirmCss},{filename:"Usage",language:"TEXT",code:slideConfirmUsage}]}
+ {id:"slide-confirm",title:"Slide to Confirm",subtitle:"Drag to the end · release to confirm",code:slideConfirmSource,language:"JSX",filename:"slide-confirm.jsx"}
 ];
 function Preview({id}){if(id==="glass")return <GlassDissolveCard/>;if(id==="swap")return <CardSwap cards={cardImages} autoplay={3200}/>;if(id==="folders")return <ImageFolders images={cardImages}/>;if(id==="daylight")return <DaylightToggle/>;if(id==="tilt")return <TiltCard src={cardImages[2].src} label="Wings"/>;if(id==="magnetic")return <MagneticButton>Get started</MagneticButton>;if(id==="dock")return <Dock items={[...cardImages,{id:"ridge",src:cardImages[0].src,label:"Ridge"}]}/>;if(id==="segmented")return <SegmentedControl/>;if(id==="spread")return <CircularSpread images={cardImages}/>;if(id==="accordion")return <ImageAccordion images={cardImages}/>;if(id==="lens")return <ImageLens src={cardImages[1].src} label="Bloom"/>;if(id==="slide-confirm")return <SlideConfirm/>;return <ImageTrail images={cardImages}/>}
 const TOKEN=/\/\*[\s\S]*?\*\/|\/\/[^\n]*|`(?:\\.|[^`])*`|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b(?:export|default|import|from|function|return|const|let|var|if|else|new|type|interface|extends|async|await|true|false|null)\b|\b\d+(?:\.\d+)?\b/g;

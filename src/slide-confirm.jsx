@@ -1,7 +1,26 @@
 import React, { useEffect, useRef, useState } from "react";
 import { animate, motion, useMotionValue, useTransform } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
-import "./slide-confirm.css";
+
+/**
+ * Slide to confirm.
+ * Install: npm install framer-motion lucide-react
+ * Import: import { SlideConfirm } from "./slide-confirm";
+ * Use: <SlideConfirm corner={28} speed={50} width={280} />
+ * The component styles are included below, so this is the only file needed.
+ */
+
+const slideConfirmStyles = `
+.sld{box-sizing:border-box;font-family:inherit;color:var(--sld-on,#f5f5f3);max-width:calc(100% - 32px)}
+.sld-track{position:relative;width:100%;height:100%;box-sizing:border-box;background:var(--sld-slab,#242424);touch-action:none;user-select:none;-webkit-user-select:none;overflow:hidden}
+.sld-track[data-stroke="on"]{box-shadow:inset 0 0 0 1px #ffffff35}
+.sld-wash{position:absolute;left:4px;top:4px;bottom:4px;z-index:1;background:var(--sld-on,#f5f5f3);pointer-events:none}
+.sld-label{position:absolute;inset:0;z-index:0;display:grid;place-items:center;color:#ffffff91;font-size:14px;font-weight:500;letter-spacing:-.01em;pointer-events:none;white-space:nowrap}
+.sld-grip{position:absolute;left:4px;top:4px;z-index:2;height:48px;padding:0;border:0;background:var(--sld-on,#f5f5f3);color:#242424;cursor:grab;pointer-events:auto;transform-origin:0% 50%;transition:none}
+.sld-track[data-held] .sld-grip{cursor:grabbing}
+.sld-arrow,.sld-done{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:500;letter-spacing:-.01em;white-space:nowrap;pointer-events:none}
+@media(prefers-reduced-motion:reduce){.sld-done{transition-duration:160ms}}
+`;
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const HEIGHT = 56;
@@ -111,15 +130,18 @@ export function SlideConfirm({ corner = 28, speed = 50, width = 280, onConfirm }
   }, []);
 
   return (
-    <div className="sld" style={{ width: span, height: HEIGHT, "--sld-on": "#f5f5f3", "--sld-slab": "#242424" }}>
-      <motion.div ref={track} className="sld-track" style={{ borderRadius: radius, scale: pulse }} data-stroke="on" data-held={held || undefined} data-done={done || undefined} onPointerDown={onPointerDown}>
-        <motion.i className="sld-wash" aria-hidden="true" style={{ width: washWidth, borderRadius: gripRadius }} />
-        <motion.span className="sld-label" style={{ opacity: labelOpacity }}>Slide to confirm</motion.span>
-        <motion.button type="button" className="sld-grip" onPointerEnter={() => setHot(true)} onPointerLeave={() => setHot(false)} style={{ x: position, scaleX, scaleY, width: gripWidth, borderRadius: gripRadius }} aria-label={done ? "Confirmed" : "Slide to confirm"}>
-          <motion.span className="sld-arrow" style={{ opacity: arrowOpacity }} aria-hidden="true"><ArrowRight size={20} strokeWidth={2} /></motion.span>
-          <motion.span className="sld-done" aria-hidden="true" initial={false} animate={{ opacity: done ? 1 : 0, scale: done ? 1 : 0.7 }} transition={{ duration: 0.16, ease: [0.33, 0.55, 0.2, 1] }}><Check size={20} strokeWidth={2} />Confirmed</motion.span>
-        </motion.button>
-      </motion.div>
-    </div>
+    <>
+      <style>{slideConfirmStyles}</style>
+      <div className="sld" style={{ width: span, height: HEIGHT, "--sld-on": "#f5f5f3", "--sld-slab": "#242424" }}>
+        <motion.div ref={track} className="sld-track" style={{ borderRadius: radius, scale: pulse }} data-stroke="on" data-held={held || undefined} data-done={done || undefined} onPointerDown={onPointerDown}>
+          <motion.i className="sld-wash" aria-hidden="true" style={{ width: washWidth, borderRadius: gripRadius }} />
+          <motion.span className="sld-label" style={{ opacity: labelOpacity }}>Slide to confirm</motion.span>
+          <motion.button type="button" className="sld-grip" onPointerEnter={() => setHot(true)} onPointerLeave={() => setHot(false)} style={{ x: position, scaleX, scaleY, width: gripWidth, borderRadius: gripRadius }} aria-label={done ? "Confirmed" : "Slide to confirm"}>
+            <motion.span className="sld-arrow" style={{ opacity: arrowOpacity }} aria-hidden="true"><ArrowRight size={20} strokeWidth={2} /></motion.span>
+            <motion.span className="sld-done" aria-hidden="true" initial={false} animate={{ opacity: done ? 1 : 0, scale: done ? 1 : 0.7 }} transition={{ duration: 0.16, ease: [0.33, 0.55, 0.2, 1] }}><Check size={20} strokeWidth={2} />Confirmed</motion.span>
+          </motion.button>
+        </motion.div>
+      </div>
+    </>
   );
 }
