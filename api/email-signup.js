@@ -1,4 +1,4 @@
-const postgres = require("postgres");
+const postgres = require("postgres").default;
 
 let sql;
 
