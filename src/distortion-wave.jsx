@@ -91,7 +91,7 @@ export function DistortionWaveDemo({type="vertical",palette="colorful",touchOrie
     revealed={sent}
     source={button}
     revealedContent={<Receipt/>}
-    overlay={<div className="dw-overlay"><button ref={button} className="dw-action" type="button" onClick={() => setSent(true)}>Confirm</button></div>}
+    overlay={sent ? null : <div className="dw-overlay"><button ref={button} className="dw-action" type="button" onClick={() => setSent(true)}>Confirm</button></div>}
     style={{width:"min(620px, calc(100vw - 40px))",height:520,borderRadius:28,overflow:"hidden"}}
   >
     <Review/>
