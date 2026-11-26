@@ -23,6 +23,7 @@ const styles = `
 .dw-line:last-child{border-bottom:0}.dw-line strong{color:#e7e8ec;font-weight:500;text-align:right}
 .dw-secure{margin:15px 0 0;color:#797c86;font-size:11px;letter-spacing:.04em}
 .dw-overlay{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding:0 20px 18px;box-sizing:border-box;pointer-events:none}
+.dw-demo[data-sent="true"] .dw-overlay{display:none}
 .dw-action{display:flex;align-items:center;justify-content:center;gap:9px;width:min(440px,calc(100% - 32px));min-height:52px;border:0;border-radius:999px;background:#f4f5f7;color:#17191f;font-family:inherit;font-size:15px;font-weight:550;cursor:pointer;pointer-events:auto;transition:transform .18s,background .18s}
 .dw-action:hover{transform:translateY(-1px);background:#fff}.dw-action:active{transform:scale(.985)}.dw-action:focus-visible{outline:2px solid #8db2ff;outline-offset:3px}
 .dw-done{margin-top:auto;background:#f4f5f7;color:#17191f}
@@ -80,6 +81,7 @@ export function DistortionWaveDemo({type="vertical",palette="colorful",touchOrie
 
   return <DistortionWave
     className="dw-demo"
+    data-sent={sent ? "true" : "false"}
     type={type}
     palette={palette}
     focus={touchOrientation ? focus : null}
