@@ -11,7 +11,7 @@ import { DistortionWave } from "distortion-waves";
  * Styles are included here so this component is a single copyable file.
  */
 const styles = `
-.dw-demo{position:relative;width:min(340px,calc(100vw - 68px));height:352px;color:#f4f5f8;font-family:inherit}
+.dw-demo{position:relative;width:min(380px,calc(100vw - 68px));height:352px;color:#f4f5f8;font-family:inherit}
 .dw-demo [data-dw-layer="content"],.dw-demo [data-dw-layer="revealed"]{min-width:0;min-height:0}
 .dw-screen{position:relative;box-sizing:border-box;width:100%;height:100%;overflow:hidden;border:1px solid #ffffff16;border-radius:26px;background:linear-gradient(145deg,#191b22,#101116 72%);color:#f4f5f8}
 .dw-review{display:flex;flex-direction:column;align-items:center;padding:22px 22px 70px;text-align:center}
@@ -89,7 +89,7 @@ export function DistortionWaveDemo({type="vertical", palette="ocean", touchOrien
     overlay={<div className="dw-overlay"><button ref={button} className="dw-action" type="button" onClick={() => setSent(value => !value)}>
       {sent ? <>Send another <ArrowLeft size={15}/></> : <>Confirm transfer <ArrowRight size={15}/></>}
     </button></div>}
-    style={{ width: "min(340px, calc(100vw - 68px))", height: 352, borderRadius: 26, overflow: "hidden" }}
+    style={{ width: "min(380px, calc(100vw - 68px))", height: 352, borderRadius: 26, overflow: "hidden" }}
   >
     <Review/>
   </DistortionWave>;
