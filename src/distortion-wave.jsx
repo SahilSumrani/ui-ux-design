@@ -10,9 +10,9 @@ import { DistortionWave } from "distortion-waves";
  */
 
 
-function Avatar() {
+function Avatar({ sourceRef }) {
   return (
-    <span className="dw-avatar" aria-hidden="true">
+    <span className="dw-avatar" ref={sourceRef} aria-hidden="true">
       <svg viewBox="0 0 48 48" fill="none">
         <path d="M7 48c1-10 7-16 17-16s16 6 17 16" fill="#29372d" />
         <path d="M16 21c0-9 4-14 9-14 7 0 10 6 9 15l-3 10H19z" fill="#3b2d25" />
@@ -25,9 +25,9 @@ function Avatar() {
   );
 }
 
-function Review() {
+function Review({ sourceRef }) {
   return <div className="dw-card dw-review">
-    <Avatar/>
+    <Avatar sourceRef={sourceRef}/>
     <p className="dw-to">Sending to <strong>Maya Chen</strong></p>
     <p className="dw-amount">$1,250.00</p>
     <div className="dw-lines">
@@ -52,7 +52,8 @@ function Receipt() {
 export function DistortionWaveDemo({type="vertical"}) {
   const [sent, setSent] = useState(false);
   const button = useRef(null);
-
+  const avatar = useRef(null);
+  // Each type has its own origin: vertical starts at Confirm; center expands from the avatar.
 
   return (
     <DistortionWave
@@ -60,7 +61,7 @@ export function DistortionWaveDemo({type="vertical"}) {
       data-sent={sent ? "true" : "false"}
       type={type}
       revealed={sent}
-      source={button}
+      source={type === "center" ? avatar : button}
       revealedContent={<Receipt />}
       overlay={
         sent ? null : (
@@ -83,7 +84,8 @@ export function DistortionWaveDemo({type="vertical"}) {
         overflow: "hidden",
       }}
     >
-      <Review />
+      <Review sourceRef={avatar} />
     </DistortionWave>
   );
 }
+
