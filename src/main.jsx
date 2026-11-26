@@ -63,7 +63,7 @@ function Card({item,user,onRequireAuth,requestCodeId,onCodeOpened,waveValues,onW
 }
 function LibraryApp({user,onSignOut,onRequireAuth,requestCodeId,onCodeOpened}){
  const [path,setPath]=useState(()=>window.location.pathname),[query,setQuery]=useState(""),[mobileOpen,setMobileOpen]=useState(false);
- const [waveValues,setWaveValues]=useState({type:"vertical",palette:"ocean",touchOrientation:false});
+ const [waveValues,setWaveValues]=useState({type:"vertical",palette:"colorful",touchOrientation:false});
  const updateWave=(key,value)=>setWaveValues(current=>({...current,[key]:value}));
  useEffect(()=>{const pop=()=>setPath(window.location.pathname);window.addEventListener("popstate",pop);return()=>window.removeEventListener("popstate",pop)},[]);
  const activeId=path.match(/^\/components\/([^/]+)/)?.[1]||null;
