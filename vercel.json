@@ -1,4 +1,8 @@
 {
+  "rewrites": [
+    { "source": "/components", "destination": "/" },
+    { "source": "/components/:path*", "destination": "/" }
+  ],
   "headers": [
     {
       "source": "/(.*)",
