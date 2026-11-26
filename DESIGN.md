@@ -5,7 +5,7 @@
 - Reference: [Libraries.dev](https://libraries.dev/) and its [Distortion Waves detail page](https://libraries.dev/waves).
 - Captured and reviewed in Chrome on 2026-11-26. The supplied desktop screenshots show the dark catalog home, a detail playground with a persistent component sidebar, a stage and adjacent settings panel, plus install/usage content below.
 - Libraries.dev's page text and accessible page structure were inspected. A separately rendered capture image could not be opened by the available image viewer, so precise pixel values below are visual estimates from the supplied screenshots; they are not claims about the source site's CSS.
-- Product evidence: the Motif homepage in Chrome exposed 15 existing demos and the existing gated code/copy flow. This implementation retains those component demos and email gate.
+- Product evidence: the Motif homepage in Chrome exposed 15 existing demos. This update removes email collection and gives every visitor direct access to source and copy controls.
 
 ## Visual system
 
@@ -25,8 +25,8 @@ Use Geist for body text, Manrope for large display headings and Geist Mono for s
 
 - The full-width `/` home uses a sticky nav, featured tiles, category filters, live component cards, how-to cards, FAQ accordion, and footer. `/components` opens the same home collection. `/components/<id>` opens a component detail page; browser back/forward stays in sync. `/introduction` and `/accessibility` are short docs pages linked from the sidebar.
 - Detail shell: fixed top header, centered content, persistent left sidebar and a main area with tabs, stage, settings, source and install content. Sidebar groups Getting started and Components, has search, and hides its scrollbar. On mobile the sidebar becomes a scrim-backed slide-in drawer.
-- Detail order: breadcrumb, title and summary, previous/next controls, Preview/Install tabs, platform labels, interactive demo with adjacent settings, then component source/usage. Install is a real tab state with package command, source, options, and license note. Copy prompt/source uses the email gate.
-- Reuse existing interactive demos, live custom controls, and email-gated source/copy flow. Preview settings continue to feed the live source for Slide to Confirm and Upload Dropzone.
+- Detail order: breadcrumb, title and summary, previous/next controls, Preview/Install tabs, platform labels, interactive demo with adjacent settings, then component source/usage. Install is a real tab state with package command, source, options, and license note. Source is free to copy; only Distortion Waves has a Copy prompt action.
+- Reuse existing interactive demos and live custom controls. Preview settings continue to feed the live source for Slide to Confirm, Upload Dropzone, and Distortion Waves.
 - Home cards are 344px tall with a 254px preview and 46px icon. Three columns become two at 1100px and one at 640px. Previews mount near the viewport and unmount offscreen; Distortion Waves uses a static receipt mock to avoid WebGL in the grid. Filters group the collection into Cards, Images, and Controls.
 - Distortion Waves confines the wave to its 440×470px transfer card with clipped overflow and 28px radius; the stage remains static and Confirm stays inside the card. Reduced-motion preferences and visible keyboard focus are respected.
 
@@ -40,4 +40,4 @@ Use Geist for body text, Manrope for large display headings and Geist Mono for s
 
 - Keep Vite, React 18, Framer Motion, Lucide, and Distortion Waves. No Tailwind or new UI framework.
 - Vercel CSP continues to use `script-src 'self'`; page behavior is bundled React code, not inline or external scripts. Geist loads through the existing Google Fonts allowance.
-- Preserve the email signup API, local unlock state, history routes, source panel/copy, and live Slide to Confirm and Upload Dropzone controls.
+- Keep source and usage copy available without sign-in or email collection. Keep history routes and live Slide to Confirm, Upload Dropzone, and Distortion Waves controls.

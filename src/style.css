@@ -334,3 +334,24 @@ body{background:var(--lib-bg);color:var(--lib-ink)}
 .dt-plat{padding:0 10px;color:#5c5c5c;font-size:15px;font-weight:500}.dt-plat.on{color:#f0f0f0}
 .dt-label{margin:20px 0 -2px;color:#eee;font-size:14px;font-weight:500}
 .hm-live.daylight>[data-ld-part="toggle-daylight"]{width:520px!important;max-width:none;margin:auto}
+
+/* Free copyable source: keep code in the document flow so page scrolling
+   remains the only vertical scrollbar. */
+.code-panel pre{white-space:pre-wrap;overflow-wrap:anywhere;overflow:visible;tab-size:2}
+.stage:has(.code-panel){height:auto;min-height:470px;overflow:visible}
+.code-panel{position:relative;inset:auto;min-height:470px;overflow:visible}
+.code-file-tabs{position:relative;z-index:3;display:flex;gap:8px;flex-wrap:wrap;padding:14px 20px 0}
+.code-file-tabs button,.source-file-tabs button{min-height:34px;padding:0 12px;border:1px solid #343434;border-radius:999px;background:#1b1b1b;color:#aaa;font:12px var(--mono)}
+.code-file-tabs button.active,.source-file-tabs button.active{background:#303030;color:#fff;border-color:#505050}
+.source-files{margin-top:16px;border:1px solid #303030;border-radius:12px;background:#101010;overflow:visible}
+.source-file-tabs{position:sticky;top:62px;z-index:4;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px;border-bottom:1px solid #292929;background:#151515;border-radius:12px 12px 0 0}
+.source-file-tabs .source-copy{display:inline-flex;align-items:center;gap:7px;margin-left:auto;color:#eee}
+.source-files pre,.install-card pre{margin:0;padding:18px;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;overflow:visible;color:#ddd;font:12px/1.7 var(--mono)}
+.install-card pre code{display:block;width:auto;max-width:100%;max-height:none;padding:0;border:0;border-radius:0;background:none;color:inherit;font:inherit;white-space:pre-wrap;overflow:visible;overflow-wrap:anywhere;word-break:break-word}
+.detail-snippet pre{max-height:none;overflow:visible;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word}
+.install-options{display:grid;gap:0;margin:0 0 18px}.install-options>div{display:grid;grid-template-columns:minmax(120px,.32fr) 1fr;gap:14px;padding:10px 0;border-bottom:1px solid #292929;color:#aaa;font-size:13px;line-height:1.5}.install-options code{color:#ddd;font-family:var(--mono)}
+@media(max-width:760px){.code-file-tabs{padding:12px 14px 0}.code-panel pre,.source-files pre,.install-card pre{padding:14px;font-size:11px}.source-file-tabs{top:56px}.install-options>div{grid-template-columns:1fr;gap:4px}.stage:has(.code-panel),.code-panel{min-height:350px}}
+@media (min-width: 761px) and (max-width: 900px) {
+  .detail-playground { grid-template-columns: minmax(0, 1fr); }
+  .detail-demo .stage { min-height: 520px; }
+}

@@ -1,0 +1,203 @@
+.dw-demo {
+  position:relative;
+  width:min(440px,calc(100vw - 48px));
+  height:470px;
+  border-radius:28px;
+  overflow:hidden;
+  color:#f5f5f6;
+  color-scheme:dark;
+  font-family:inherit
+}
+
+.dw-demo [data-dw-layer="content"],.dw-demo [data-dw-layer="revealed"] {
+  min-width:0;
+  min-height:0
+}
+
+.dw-card {
+  box-sizing:border-box;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  border:1px solid #ffffff16;
+  border-radius:28px;
+  background:linear-gradient(145deg,#202126,#15161a 72%);
+  color:#f4f5f8
+}
+
+.dw-review,.dw-receipt {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:28px 24px;
+  text-align:center
+}
+.dw-review {
+  padding-bottom:96px
+}
+
+.dw-avatar,.dw-check {
+  display:grid;
+  place-items:center;
+  width:56px;
+  height:56px;
+  margin-bottom:14px;
+  overflow:hidden;
+  border:1px solid #a7a27a88;
+  border-radius:50%;
+  background:radial-gradient(circle at 50% 30%,#d9c59a 0 18%,#765a3e 19% 36%,#3b4538 37% 100%);
+  color:#fff
+}
+
+.dw-avatar svg {
+  width:100%;
+  height:100%
+}
+
+.dw-check {
+  border-color:#83aaff55;
+  background:radial-gradient(circle at 35% 25%,#5b92ff,#3267db 75%);
+  box-shadow:0 8px 30px #367cff44
+}
+
+.dw-eyebrow {
+  margin:0 0 5px;
+  color:#8eb6ff;
+  font-size:12px;
+  letter-spacing:.16em;
+  text-transform:uppercase
+}
+
+.dw-to {
+  margin:0;
+  color:#a8abb5;
+  font-size:15px
+}
+.dw-to strong {
+  color:#f2f3f6;
+  font-weight:550
+}
+
+.dw-amount {
+  margin:9px 0 16px;
+  font-size:36px;
+  font-weight:550;
+  letter-spacing:-.06em
+}
+
+.dw-lines {
+  width:100%;
+  margin:0;
+  padding:0 16px;
+  border:1px solid #ffffff10;
+  border-radius:24px;
+  background:#ffffff05
+}
+
+.dw-line {
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:12px 0;
+  border-bottom:1px solid #ffffff0d;
+  color:#9295a0;
+  font-size:14px;
+  text-align:left
+}
+
+.dw-line:last-child {
+  border-bottom:0
+}
+.dw-line strong {
+  color:#e7e8ec;
+  font-weight:500;
+  text-align:right
+}
+
+.dw-secure {
+  margin:15px 0 0;
+  color:#797c86;
+  font-size:11px;
+  letter-spacing:.04em
+}
+
+.dw-overlay {
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  padding:0 24px 24px;
+  box-sizing:border-box;
+  pointer-events:none
+}
+
+.dw-demo[data-sent="true"] .dw-overlay {
+  display:none
+}
+
+.dw-action {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  width:100%;
+  min-height:52px;
+  border:0;
+  border-radius:999px;
+  background:#f4f5f7;
+  color:#17191f;
+  font-family:inherit;
+  font-size:15px;
+  font-weight:550;
+  cursor:pointer;
+  pointer-events:auto;
+  transition:transform .18s,background .18s
+}
+
+.dw-action:hover {
+  transform:translateY(-1px);
+  background:#fff
+}
+.dw-action:active {
+  transform:scale(.985)
+}
+.dw-action:focus-visible {
+  outline:2px solid #8db2ff;
+  outline-offset:3px
+}
+
+.dw-done {
+  margin-top:auto;
+  background:#f4f5f7;
+  color:#17191f
+}
+
+@media(max-width:520px) {
+  .dw-demo {
+  height:450px
+}
+.dw-card {
+  padding:24px 18px
+}
+.dw-amount {
+  font-size:32px
+}
+.dw-line {
+  font-size:13px;
+  padding:11px 0
+}
+.dw-overlay {
+  padding:0 18px 18px
+}
+
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .dw-action {
+  transition:none
+}
+
+}
+
+

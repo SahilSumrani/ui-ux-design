@@ -29,11 +29,11 @@ function CatalogCard({item, Icon, Preview, href, go, previews}){
 
 const STEPS = [
   ["Pick a component","Open any card and play with the live preview. Tune its settings in the side panel."],
-  ["Copy the source","Unlock the code once with your email. Each component is one self-contained file."],
+  ["Copy the source","Code is free to copy for everyone. Each component includes the source and a copy button."],
   ["Make it yours","Paste it into your React app. Props and styles are plain, so changing them is easy."]
 ];
 const FAQ = [
-  ["Are the components free?","Yes. Every interaction can be previewed without signing in. Enter your email once to unlock and copy the source."],
+  ["Are the components free?","Yes. Every interaction and its source code are free to use and copy. No sign-in is needed."],
   ["What do I need to use them?","React 18 or newer. Most components use framer-motion and lucide-react. Distortion Waves also needs the distortion-waves package."],
   ["Can I change how they look?","Yes. Slide to Confirm, Upload Dropzone and Distortion Waves have live controls, and the code panel updates as you change them."],
   ["Do they work outside React?","These versions are written for React. The Daylight Toggle ships as plain HTML, CSS and JS."]
@@ -46,7 +46,7 @@ const TILES = [
   ["image","distortion-wave","Distortion waves",3]
 ];
 
-export function HomePage({data, icons, Preview, cardImages, go, href, previews, user, onSignOut}){
+export function HomePage({data, icons, Preview, cardImages, go, href, previews}){
   const [open, setOpen] = useState(0);
   const [filter,setFilter]=useState("All");
   const [menuOpen,setMenuOpen]=useState(false);
@@ -57,9 +57,9 @@ export function HomePage({data, icons, Preview, cardImages, go, href, previews, 
     <header className="hm-nav"><div className="hm-nav-in">
       <a href="/" onClick={e=>go("/",e)} className="hm-brand"><BaffleLogo/><span>Motif</span><span className="hm-dim">.interactions</span></a>
       <nav className="hm-links"><a href="#components" onClick={jump("components")}>Components</a><a href="#how" onClick={jump("how")}>How to use</a><a href="#faq" onClick={jump("faq")}>FAQs</a></nav>
-      <div className="hm-nav-right">{user?<><span className="hm-email">{user.email}</span><button className="hm-pill" onClick={onSignOut}>Sign out</button></>:<a className="hm-pill hm-pill--blue" href={href(data[0])} onClick={e=>go(href(data[0]),e)}>Try it</a>}</div>
+      <div className="hm-nav-right"><a className="hm-pill hm-pill--blue" href={href(data[0])} onClick={e=>go(href(data[0]),e)}>Try it</a></div>
       <button className="hm-menu" aria-label="Open navigation" aria-expanded={menuOpen} onClick={()=>setMenuOpen(v=>!v)}><span/><span/></button>
-      {menuOpen&&<nav className="hm-drawer"><a href="#components" onClick={e=>{jump("components")(e);setMenuOpen(false)}}>Components</a><a href="#how" onClick={e=>{jump("how")(e);setMenuOpen(false)}}>How to use</a><a href="#faq" onClick={e=>{jump("faq")(e);setMenuOpen(false)}}>FAQs</a>{user?<div className="hm-drawer-account"><span>{user.email}</span><button className="hm-pill" onClick={()=>{onSignOut();setMenuOpen(false)}}>Sign out</button></div>:<a className="hm-pill hm-pill--blue" href={href(data[0])} onClick={e=>{go(href(data[0]),e);setMenuOpen(false)}}>Try it</a>}</nav>}
+      {menuOpen&&<nav className="hm-drawer"><a href="#components" onClick={e=>{jump("components")(e);setMenuOpen(false)}}>Components</a><a href="#how" onClick={e=>{jump("how")(e);setMenuOpen(false)}}>How to use</a><a href="#faq" onClick={e=>{jump("faq")(e);setMenuOpen(false)}}>FAQs</a><a className="hm-pill hm-pill--blue" href={href(data[0])} onClick={e=>{go(href(data[0]),e);setMenuOpen(false)}}>Try it</a></nav>}
     </div></header>
 
     <section className="hm-hero">
