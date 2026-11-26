@@ -1,14 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./distortion-wave.css";
-import { Check } from "lucide-react";
+import { Check, Coins } from "lucide-react";
 import { DistortionWave } from "distortion-waves";
 
-/**
- * The Transfer example from the Distortion Waves usage snippet.
- * Install: npm install distortion-waves
- * Use: <DistortionWaveDemo />
- */
-
+/** Transfer and Center examples for the Distortion Waves playground. */
 
 function Avatar({ sourceRef }) {
   return (
@@ -26,57 +21,128 @@ function Avatar({ sourceRef }) {
 }
 
 function Review({ sourceRef }) {
-  return <div className="dw-card dw-review">
-    <Avatar sourceRef={sourceRef}/>
-    <p className="dw-to">Sending to <strong>Maya Chen</strong></p>
-    <p className="dw-amount">$1,250.00</p>
-    <div className="dw-lines">
-      <div className="dw-line"><span>From</span><strong>Everyday ·· 4821</strong></div>
-      <div className="dw-line"><span>Arrives</span><strong>In seconds</strong></div>
-      <div className="dw-line"><span>Fee</span><strong>Free</strong></div>
-      <div className="dw-line"><span>Note</span><strong>Studio rent</strong></div>
+  return (
+    <div className="dw-card dw-review">
+      <Avatar sourceRef={sourceRef} />
+      <p className="dw-to">Sending to <strong>Maya Chen</strong></p>
+      <p className="dw-amount">$1,250.00</p>
+      <div className="dw-lines">
+        <div className="dw-line"><span>From</span><strong>Everyday ·· 4821</strong></div>
+        <div className="dw-line"><span>Arrives</span><strong>In seconds</strong></div>
+        <div className="dw-line"><span>Fee</span><strong>Free</strong></div>
+        <div className="dw-line"><span>Note</span><strong>Studio rent</strong></div>
+      </div>
     </div>
-  </div>;
+  );
+}
+
+function CreditRows() {
+  return (
+    <div className="dw-lines dw-credit-lines">
+      <div className="dw-line"><span className="dw-row-check"><Check size={13} /></span><strong>Balance goes to $85.73 right away</strong></div>
+      <div className="dw-line"><span className="dw-row-check"><Check size={13} /></span><strong>Use credits for document rewrites</strong></div>
+      <div className="dw-line"><span className="dw-row-check"><Check size={13} /></span><strong>Credits never expire</strong></div>
+    </div>
+  );
+}
+
+function CreditsCard({ sourceRef }) {
+  return (
+    <div className="dw-card dw-credits">
+      <span className="dw-token" ref={sourceRef} aria-hidden="true"><Coins size={26} strokeWidth={1.8} /></span>
+      <h2>Add credits</h2>
+      <p className="dw-credit-balance">Current balance: $65.73</p>
+      <CreditRows />
+    </div>
+  );
+}
+
+function CreditsAdded() {
+  return (
+    <div className="dw-card dw-credits dw-credits-added">
+      <span className="dw-check dw-credit-check" aria-hidden="true"><Check size={27} strokeWidth={2.8} /></span>
+      <h2>Credits added</h2>
+      <p className="dw-credit-balance">Current balance: $85.73</p>
+      <CreditRows />
+    </div>
+  );
 }
 
 function Receipt() {
-  return <div className="dw-card dw-receipt">
-    <span className="dw-check" aria-hidden="true"><Check size={28} strokeWidth={2.5}/></span>
-    <p className="dw-eyebrow">Transfer complete</p>
-    <p className="dw-to"><strong>Money sent</strong></p>
-    <p className="dw-secure">Your transfer to Maya Chen is on its way.</p>
-    <p className="dw-amount">$1,250.00</p>
-  </div>;
+  return (
+    <div className="dw-card dw-receipt">
+      <span className="dw-check" aria-hidden="true"><Check size={28} strokeWidth={2.5} /></span>
+      <p className="dw-eyebrow">Transfer complete</p>
+      <p className="dw-to"><strong>Money sent</strong></p>
+      <p className="dw-secure">Your transfer to Maya Chen is on its way.</p>
+      <p className="dw-amount">$1,250.00</p>
+    </div>
+  );
 }
 
-export function DistortionWaveDemo({type="vertical"}) {
+export function DistortionWaveDemo({ type = "vertical" }) {
   const [sent, setSent] = useState(false);
+  const [processing, setProcessing] = useState(false);
   const button = useRef(null);
-  const avatar = useRef(null);
-  // Each type has its own origin: vertical starts at Confirm; center expands from the avatar.
+  const token = useRef(null);
+  const processingTimer = useRef(null);
+  const resetTimer = useRef(null);
+  const isCenter = type === "center";
+
+  useEffect(() => () => {
+    window.clearTimeout(processingTimer.current);
+    window.clearTimeout(resetTimer.current);
+  }, []);
+
+  function handleAction() {
+    if (processing) return;
+    if (sent) {
+      window.clearTimeout(resetTimer.current);
+      setSent(false);
+      return;
+    }
+
+    if (!isCenter) {
+      setSent(true);
+      return;
+    }
+
+    setProcessing(true);
+    processingTimer.current = window.setTimeout(() => {
+      setProcessing(false);
+      setSent(true);
+    }, 850);
+  }
+
+  function handleFinish(revealed) {
+    if (!isCenter || !revealed) return;
+    resetTimer.current = window.setTimeout(() => setSent(false), 1900);
+  }
 
   return (
     <DistortionWave
       className="dw-demo"
       data-sent={sent ? "true" : "false"}
+      data-processing={processing ? "true" : "false"}
       type={type}
+      palette={isCenter ? "green" : undefined}
       revealed={sent}
-      source={type === "center" ? avatar : button}
-      revealedContent={<Receipt />}
-      overlay={
-        sent ? null : (
-          <div className="dw-overlay">
-            <button
-              ref={button}
-              className="dw-action"
-              type="button"
-              onClick={() => setSent(true)}
-            >
-              Confirm
-            </button>
-          </div>
-        )
-      }
+      onFinish={handleFinish}
+      source={isCenter ? token : button}
+      revealedContent={isCenter ? <CreditsAdded /> : <Receipt />}
+      overlay={sent && !isCenter ? null : (
+        <div className="dw-overlay">
+          <button
+            ref={button}
+            className="dw-action"
+            type="button"
+            disabled={processing}
+            onClick={handleAction}
+          >
+            {isCenter ? (processing ? "Processing…" : sent ? "Done" : "Buy $20 tokens") : "Confirm"}
+          </button>
+        </div>
+      )}
       style={{
         width: "min(440px, calc(100vw - 48px))",
         height: 470,
@@ -84,8 +150,7 @@ export function DistortionWaveDemo({type="vertical"}) {
         overflow: "hidden",
       }}
     >
-      <Review sourceRef={avatar} />
+      {isCenter ? <CreditsCard sourceRef={token} /> : <Review />}
     </DistortionWave>
   );
 }
-
