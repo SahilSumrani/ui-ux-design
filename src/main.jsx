@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from "react";
 import {createRoot} from "react-dom/client";
 import {AnimatePresence,motion} from "framer-motion";
-import {ArrowRight,Check,Code2,Copy,SlidersHorizontal,Search,Menu,ChevronRight,House,Boxes} from "lucide-react";
+import {ArrowRight,Check,Code2,Copy,SlidersHorizontal,Search,Menu,ChevronRight,House,CreditCard,ArrowLeftRight,FolderOpen,Sun,Move3d,Magnet,PanelBottom,CircleDot,GalleryVerticalEnd,ScanSearch,MousePointer2,MoveRight,Upload as UploadIcon,Waves} from "lucide-react";
 import {GlassDissolveCard,CardSwap,ImageFolders,TiltCard,MagneticButton,Dock,SegmentedControl,CircularSpread,ImageAccordion,ImageLens,ImageTrail,BaffleLogo} from "./components.jsx";
 import {DaylightToggle} from "./daylight-toggle.jsx";
 import {SlideConfirm} from "./slide-confirm.jsx";
@@ -37,6 +37,7 @@ const data=[
  {id:"upload",title:"Upload Dropzone",subtitle:"Drag a sample file into the dropzone",code:uploadSource,language:"JSX",filename:"upload.jsx"},
  {id:"distortion-wave",title:"Distortion Waves",subtitle:"Confirm the transfer · watch the screen bend into a receipt",code:distortionWaveSource,language:"JSX",filename:"distortion-wave.jsx"}
 ];
+const componentIcons={glass:CreditCard,swap:ArrowLeftRight,folders:FolderOpen,daylight:Sun,tilt:Move3d,magnetic:Magnet,dock:PanelBottom,segmented:SlidersHorizontal,spread:CircleDot,accordion:GalleryVerticalEnd,lens:ScanSearch,trail:MousePointer2,"slide-confirm":MoveRight,upload:UploadIcon,"distortion-wave":Waves};
 function Preview({id,slideProps,uploadProps,waveProps}){if(id==="glass")return <GlassDissolveCard/>;if(id==="swap")return <CardSwap cards={cardImages} autoplay={3200}/>;if(id==="folders")return <ImageFolders images={cardImages}/>;if(id==="daylight")return <DaylightToggle/>;if(id==="tilt")return <TiltCard src={cardImages[2].src} label="Wings"/>;if(id==="magnetic")return <MagneticButton>Get started</MagneticButton>;if(id==="dock")return <Dock items={[...cardImages,{id:"ridge",src:cardImages[0].src,label:"Ridge"}]}/>;if(id==="segmented")return <SegmentedControl/>;if(id==="spread")return <CircularSpread images={cardImages}/>;if(id==="accordion")return <ImageAccordion images={cardImages}/>;if(id==="lens")return <ImageLens src={cardImages[1].src} label="Bloom"/>;if(id==="slide-confirm")return <SlideConfirm {...slideProps}/>;if(id==="upload")return <Upload {...uploadProps}/>;if(id==="distortion-wave")return <DistortionWaveDemo {...waveProps}/>;return <ImageTrail images={cardImages}/>}
 const TOKEN=/\/\*[\s\S]*?\*\/|\/\/[^\n]*|`(?:\\.|[^`])*`|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b(?:export|default|import|from|function|return|const|let|var|if|else|new|type|interface|extends|async|await|true|false|null)\b|\b\d+(?:\.\d+)?\b/g;
 function highlight(source){const parts=[];let start=0;for(const match of source.matchAll(TOKEN)){if(match.index>start)parts.push(source.slice(start,match.index));const token=match[0],kind=/^(\/\/|\/\*)/.test(token)?"comment":/^[`"']/.test(token)?"string":/^\d/.test(token)?"number":"keyword";parts.push(<span className={`syntax-${kind}`} key={match.index}>{token}</span>);start=match.index+token.length}if(start<source.length)parts.push(source.slice(start));return parts}
@@ -75,12 +76,11 @@ function LibraryApp({user,onSignOut,onRequireAuth,requestCodeId,onCodeOpened}){
   <header className="library-topbar"><button className="mobile-menu" aria-label="Open component menu" onClick={()=>setMobileOpen(true)}><Menu size={19}/></button><a href="/" onClick={e=>go("/",e)} className="library-brand"><BaffleLogo/><span>motif</span><i>/</i><span>interactions</span></a><div className="topbar-right"><span className="count-pill"><span className="status-dot"/>{data.length} components</span>{user&&<><span className="user-email">{user.email}</span><button className="sign-out" onClick={onSignOut}>Sign out</button></>}</div></header>
   {mobileOpen&&<button className="sidebar-scrim" aria-label="Close menu" onClick={()=>setMobileOpen(false)}/>}
   <aside className={`library-sidebar ${mobileOpen?"open":""}`} aria-label="Component navigation">
-   <a href="/components" onClick={e=>go("/components",e)} className={`sidebar-home ${!active?"current":""}`}><House size={15}/> All components <span>{data.length}</span></a>
-   <div className="sidebar-section"><div className="sidebar-label"><span>Components</span><span>01—{String(data.length).padStart(2,"0")}</span></div>
+   <a href="/components" onClick={e=>go("/components",e)} className={`sidebar-home ${!active?"current":""}`}><House size={17}/> All components</a>
+   <div className="sidebar-section"><div className="sidebar-label"><span>Components</span></div>
     <label className="sidebar-search"><Search size={14}/><input aria-label="Search components" placeholder="Find a component" value={query} onChange={e=>setQuery(e.target.value)}/><kbd>/</kbd></label>
-    <nav className="component-nav">{visible.map((item,i)=><a key={item.id} href={href(item)} onClick={e=>go(href(item),e)} className={activeId===item.id?"active":""}><span className="nav-index">{String(data.indexOf(item)+1).padStart(2,"0")}</span><span className="nav-title">{item.title}</span>{activeId===item.id&&<ChevronRight size={14}/>}</a>)}{visible.length===0&&<p className="no-results">No matching components.</p>}</nav>
+    <nav className="component-nav">{visible.map(item=>{const Icon=componentIcons[item.id];return <a key={item.id} href={href(item)} onClick={e=>go(href(item),e)} className={activeId===item.id?"active":""}><span className="nav-icon"><Icon size={16} strokeWidth={1.7}/></span><span className="nav-title">{item.title}</span>{activeId===item.id&&<ChevronRight size={14}/>}</a>})}{visible.length===0&&<p className="no-results">No matching components.</p>}</nav>
    </div>
-   <div className="sidebar-bottom"><div className="sidebar-bottom-mark"><Boxes size={15}/><span>Built with Motion</span></div><span>React · Copy-ready source</span><p>Small interactions, made tangible.</p></div>
   </aside>
   <main className="library-main">
    {!active?<>
