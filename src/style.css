@@ -105,3 +105,4 @@ body{background:var(--lib-bg);color:var(--lib-ink)}
 .sidebar-search{flex:none}
 @media(max-height:820px){.library-sidebar{padding-top:18px;padding-bottom:12px}.sidebar-home{height:38px}.sidebar-section{margin-top:14px}.sidebar-search{height:36px;margin-bottom:8px}.component-nav{gap:1px}.component-nav a{height:32px}.nav-icon{width:24px;height:24px}}
 @media(max-width:760px){.sidebar-home{height:42px}.sidebar-search{height:40px}.component-nav a{height:42px}.nav-icon{width:29px;height:29px}}
+@media(max-height:700px) and (min-width:761px){.library-sidebar{padding-top:10px;padding-bottom:8px}.sidebar-home{height:34px}.sidebar-section{margin-top:8px}.sidebar-label{padding-bottom:6px}.sidebar-search{height:32px;margin-bottom:5px}.component-nav{gap:0}.component-nav a{height:29px;font-size:12px}.nav-icon{width:22px;height:22px}}
