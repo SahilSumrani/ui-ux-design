@@ -59,8 +59,9 @@ function Receipt() {
   </div>;
 }
 
-export function DistortionWaveDemo() {
+export function DistortionWaveDemo({type="vertical", palette="ocean", touchOrientation=false}) {
   const [sent, setSent] = useState(false);
+  const [focus, setFocus] = useState(null);
   const button = useRef(null);
 
   useEffect(() => {
@@ -74,8 +75,14 @@ export function DistortionWaveDemo() {
 
   return <DistortionWave
     className="dw-demo"
-    type="vertical"
-    palette="ocean"
+    type={type}
+    palette={palette}
+    focus={touchOrientation ? focus : null}
+    onPointerDownCapture={event => {
+      if (!touchOrientation) return;
+      const rect = event.currentTarget.getBoundingClientRect();
+      setFocus({x:event.clientX-rect.left,y:event.clientY-rect.top});
+    }}
     revealed={sent}
     source={button}
     revealedContent={<Receipt/>}
