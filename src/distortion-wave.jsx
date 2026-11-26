@@ -56,12 +56,6 @@ function Receipt() {
     <p className="dw-to"><strong>Money sent</strong></p>
     <p className="dw-secure">Your transfer to Maya Chen is on its way.</p>
     <p className="dw-amount">$1,250.00</p>
-    <div className="dw-lines">
-      <div className="dw-line"><span>From</span><strong>Everyday ·· 4821</strong></div>
-      <div className="dw-line"><span>Status</span><strong>Sent</strong></div>
-      <div className="dw-line"><span>Fee</span><strong>Free</strong></div>
-      <div className="dw-line"><span>Note</span><strong>Studio rent</strong></div>
-    </div>
   </div>;
 }
 
